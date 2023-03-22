@@ -12,7 +12,7 @@ class ArticleSerializer(serializers.ModelSerializer):
         fields='__all__'
 
 class AuthorSerializer(serializers.ModelSerializer):
-    class Author:
+    class Meta:
         model=Author
         fields='__all__'
 

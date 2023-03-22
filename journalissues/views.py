@@ -1,7 +1,7 @@
 from rest_framework.mixins import *
 from rest_framework.generics import GenericAPIView
-from .models import Issue, Article
-from .serializers import IssueSerializer, ArticleSerializer
+from .models import Issue, Article, Author
+from .serializers import IssueSerializer, ArticleSerializer, AuthorSerializer
 
 class issuesView(GenericAPIView, ListModelMixin, CreateModelMixin):
     queryset = Issue.objects.all()
@@ -43,6 +43,26 @@ class articleView(GenericAPIView, UpdateModelMixin, RetrieveModelMixin, DestroyM
         issue_id = self.kwargs.get('issue_id')
         queryset = Article.objects.filter(issue_id=issue_id)
         return queryset
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+    def patch(self, request, *args, **kwargs):
+        return self.partial_update(request, *args, **kwargs)
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
+
+class authorsView(GenericAPIView, ListModelMixin, CreateModelMixin):
+    queryset = Author.objects.all()
+    serializer_class=AuthorSerializer
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+    def post(self,request,*args, **kwargs):
+        return self.create(request, *args, **kwargs)
+
+class authorView(GenericAPIView, UpdateModelMixin, RetrieveModelMixin, DestroyModelMixin):
+    queryset = Author.objects.all()
+    serializer_class=AuthorSerializer
     def get(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)
     def put(self, request, *args, **kwargs):
