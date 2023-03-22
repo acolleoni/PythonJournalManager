@@ -25,24 +25,15 @@ class issueView(GenericAPIView, UpdateModelMixin, RetrieveModelMixin, DestroyMod
 
 class articlesView(GenericAPIView, ListModelMixin, CreateModelMixin):
     serializer_class=ArticleSerializer
-    #Override del metodo get_queryset per ottenere solo gli articoli di un certo numero:
-    def get_queryset(self):
-        issue_id = self.kwargs.get('issue_id')
-        queryset = Article.objects.filter(issue_id=issue_id)
-        return queryset
+    queryset = Article.objects.all()
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
     def post(self,request,*args, **kwargs):
         return self.create(request, *args, **kwargs)
 
-
 class articleView(GenericAPIView, UpdateModelMixin, RetrieveModelMixin, DestroyModelMixin):
     serializer_class=ArticleSerializer
-    #Override del metodo get_queryset per ottenere solo gli articoli di un certo numero:
-    def get_queryset(self):
-        issue_id = self.kwargs.get('issue_id')
-        queryset = Article.objects.filter(issue_id=issue_id)
-        return queryset
+    queryset = Article.objects.all()
     def get(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)
     def put(self, request, *args, **kwargs):
@@ -51,6 +42,16 @@ class articleView(GenericAPIView, UpdateModelMixin, RetrieveModelMixin, DestroyM
         return self.partial_update(request, *args, **kwargs)
     def delete(self, request, *args, **kwargs):
         return self.destroy(request, *args, **kwargs)
+
+class issueArticlesView(GenericAPIView, ListModelMixin):
+    #Override del metodo get_queryset per ottenere solo gli articoli di un certo numero:
+    def get_queryset(self):
+        issue_id = self.kwargs.get('issue_id')
+        queryset = Article.objects.filter(issue_id=issue_id)
+        return queryset
+    serializer_class=ArticleSerializer
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
 
 class authorsView(GenericAPIView, ListModelMixin, CreateModelMixin):
     queryset = Author.objects.all()
