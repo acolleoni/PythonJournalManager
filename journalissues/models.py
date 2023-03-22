@@ -32,7 +32,7 @@ class Article(BaseModel):
     title = models.CharField(max_length=64)
     author = models.ManyToManyField(Author, related_name="articles")
     issue = models.ForeignKey(Issue, on_delete=models.CASCADE, related_name="articles")
-    category = models.ManyToManyField(Category, related_name="categories")
+    category = models.ManyToManyField(Category, related_name="articles")
     abstract = models.TextField()
     img_url = models.CharField(null=True, blank=True, max_length=64)
     pdf_url = models.CharField(max_length=64)
