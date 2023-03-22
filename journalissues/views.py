@@ -37,8 +37,8 @@ class articlesView(GenericAPIView, ListModelMixin, CreateModelMixin):
 
 
 class articleView(GenericAPIView, UpdateModelMixin, RetrieveModelMixin, DestroyModelMixin):
-    queryset = Issue.objects.all()
     serializer_class=ArticleSerializer
+    #Override del metodo get_queryset per ottenere solo gli articoli di un certo numero:
     def get_queryset(self):
         issue_id = self.kwargs.get('issue_id')
         queryset = Article.objects.filter(issue_id=issue_id)
