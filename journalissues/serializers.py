@@ -7,7 +7,7 @@ class IssueSerializer(serializers.ModelSerializer):
         fields='__all__'
 
 class ArticleSerializer(serializers.ModelSerializer):
-    class Article:
+    class Meta:
         model=Article
         fields='__all__'
 
