@@ -30,7 +30,7 @@ class Issue(BaseModel):
 
 class Article(BaseModel):
     title = models.CharField(max_length=64)
-    author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name="articles")
+    author = models.ManyToManyField(Author, related_name="articles")
     issue = models.ForeignKey(Issue, on_delete=models.CASCADE, related_name="articles")
     category = models.ForeignKey(Category, null=True, on_delete=models.SET_NULL, related_name="articles")
     abstract = models.TextField()
