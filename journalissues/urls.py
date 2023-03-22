@@ -7,5 +7,7 @@ urlpatterns = [
     path('<int:issue_id>/articles/', views.articlesView.as_view()),
     path('<int:issue_id>/articles/<int:pk>/', views.articleView.as_view()),
     path('authors/', views.authorsView.as_view()),
-    path('authors/<int:pk>/', views.authorView.as_view())
+    path('authors/<int:pk>/', views.authorView.as_view()),
+    path('categories/', views.categoriesView.as_view()),
+    path('categories/<int:pk>/', views.categoryView.as_view())
 ]
