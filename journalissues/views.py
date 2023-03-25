@@ -1,9 +1,13 @@
 from rest_framework.mixins import *
 from rest_framework.generics import GenericAPIView
+
+from pyjm.permissions import AuthCheck
 from .models import Issue, Article, Author, Category
 from .serializers import IssueSerializer, ArticleSerializer, AuthorSerializer, CategorySerializer
+from rest_framework.permissions import IsAuthenticated
 
 class issuesView(GenericAPIView, ListModelMixin, CreateModelMixin):
+    permission_classes = [AuthCheck]
     queryset = Issue.objects.all()
     serializer_class=IssueSerializer
     def get(self, request, *args, **kwargs):
