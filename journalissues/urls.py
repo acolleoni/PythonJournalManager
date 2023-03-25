@@ -10,5 +10,7 @@ urlpatterns = [
     path('authors/', views.authorsView.as_view()),
     path('authors/<int:pk>/', views.authorView.as_view()),
     path('categories/', views.categoriesView.as_view()),
-    path('categories/<int:pk>/', views.categoryView.as_view())
+    path('categories/<int:pk>/', views.categoryView.as_view()),
+    path('saveissuefile/', views.SaveIssueFile.as_view())
+
 ]

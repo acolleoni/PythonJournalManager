@@ -1,5 +1,8 @@
 from rest_framework.mixins import *
 from rest_framework.generics import GenericAPIView
+from rest_framework.views import APIView
+from django.core.files.storage import default_storage
+from rest_framework.parsers import MultiPartParser
 
 from .models import Issue, Article, Author, Category
 from .serializers import IssueSerializer, ArticleSerializer, AuthorSerializer, CategorySerializer
@@ -93,3 +96,10 @@ class categoryView(GenericAPIView, UpdateModelMixin, RetrieveModelMixin, Destroy
         return self.partial_update(request, *args, **kwargs)
     def delete(self, request, *args, **kwargs):
         return self.destroy(request, *args, **kwargs)
+
+class SaveIssueFile(APIView):
+    parser_classes = (MultiPartParser,) #Oppure: FileUploadParser
+    def post(self, request):
+        file = request.FILES['file']
+        file_name = default_storage.save('issues/' + file.name, file)
+        return Response(file_name, status=204)

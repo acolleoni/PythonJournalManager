@@ -15,6 +15,9 @@ from pathlib import Path
 #dependency for jwt expire time
 from datetime import timedelta
 
+#dependency for file upload management
+import os
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -153,3 +156,8 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=30),
   }
+
+# File upload settings
+BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
+MEDIA_URL='/uploads/'
+MEDIA_ROOT=os.path.join(BASE_DIR,"uploads")

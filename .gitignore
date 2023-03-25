@@ -130,3 +130,6 @@ dmypy.json
 
 #IDE
 .idea
+
+#File uploading directory
+uploads/
