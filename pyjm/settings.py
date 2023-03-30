@@ -39,8 +39,9 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'journalissues',
     'proposals',
-    'rest_framework',
     'usermanager',
+    'corsheaders',
+    'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -58,6 +59,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware'
 ]
 
 ROOT_URLCONF = 'pyjm.urls'
@@ -161,3 +163,9 @@ SIMPLE_JWT = {
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 MEDIA_URL='/uploads/'
 MEDIA_ROOT=os.path.join(BASE_DIR,"uploads")
+
+#Allowing Angular Access through Cors Setting
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_WHITELIST = (
+  'http://localhost:4200',
+)
