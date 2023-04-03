@@ -3,6 +3,7 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.views import APIView
 from django.core.files.storage import default_storage
 from rest_framework.parsers import MultiPartParser
+from rest_framework.generics import get_object_or_404
 
 from .models import Issue, Article, Author, Category
 from .serializers import IssueSerializer, ArticleSerializer, AuthorSerializer, CategorySerializer
@@ -27,6 +28,20 @@ class issueView(GenericAPIView, UpdateModelMixin, RetrieveModelMixin, DestroyMod
     def delete(self, request, *args, **kwargs):
         return self.destroy(request, *args, **kwargs)
 
+class lastIssueView(GenericAPIView, UpdateModelMixin, RetrieveModelMixin, DestroyModelMixin):
+    # Override
+    def get_queryset(self):
+        issues = Issue.objects.all()
+        lastissueid = issues[len(issues) - 1].id
+        queryset = Issue.objects.filter(pk=lastissueid)
+        return queryset
+    #Override
+    def get_object(self):
+        return get_object_or_404(self.get_queryset())
+    serializer_class=IssueSerializer
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
 class articlesView(GenericAPIView, ListModelMixin, CreateModelMixin):
     serializer_class=ArticleSerializer
     queryset = Article.objects.all()
@@ -48,11 +63,27 @@ class articleView(GenericAPIView, UpdateModelMixin, RetrieveModelMixin, DestroyM
         return self.destroy(request, *args, **kwargs)
 
 class issueArticlesView(GenericAPIView, ListModelMixin):
-    #Override del metodo get_queryset per ottenere solo gli articoli di un certo numero:
+    #Override
     def get_queryset(self):
         issue_id = self.kwargs.get('issue_id')
         queryset = Article.objects.filter(issue_id=issue_id)
         return queryset
+    serializer_class=ArticleSerializer
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+class lastIssueArticlesView(GenericAPIView, ListModelMixin):
+    # Override
+    def get_queryset(self):
+        issues = Issue.objects.all()
+        lastissueid = issues[len(issues) - 1].id
+        print(lastissueid)
+        queryset = Article.objects.filter(issue_id=lastissueid)
+        print(queryset)
+        return queryset
+    #Override
+    def get_object(self):
+        return get_object_or_404(self.get_queryset())
     serializer_class=ArticleSerializer
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
