@@ -1,6 +1,6 @@
 from django.db import models
 
-#Il basemodel serve a far funzionare pyCharm Community
+#BaseModel is needed just in order to be able to use the IDE PyCharm Community
 class BaseModel(models.Model):
     objects = models.Manager()
     class Meta:
