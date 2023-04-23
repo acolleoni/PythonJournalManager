@@ -32,9 +32,12 @@ class lastIssueView(GenericAPIView, UpdateModelMixin, RetrieveModelMixin, Destro
     # Override
     def get_queryset(self):
         issues = Issue.objects.all()
-        lastissueid = issues[len(issues) - 1].id
-        queryset = Issue.objects.filter(pk=lastissueid)
-        return queryset
+        if(len(issues)!=0):
+            lastissueid = issues[len(issues) - 1].id
+            queryset = Issue.objects.filter(pk=lastissueid)
+            return queryset
+        else:
+            return None
     #Override
     def get_object(self):
         return get_object_or_404(self.get_queryset())
@@ -76,11 +79,12 @@ class lastIssueArticlesView(GenericAPIView, ListModelMixin):
     # Override
     def get_queryset(self):
         issues = Issue.objects.all()
-        lastissueid = issues[len(issues) - 1].id
-        print(lastissueid)
-        queryset = Article.objects.filter(issue_id=lastissueid)
-        print(queryset)
-        return queryset
+        if(len(issues)!=0):
+            lastissueid = issues[len(issues) - 1].id
+            queryset = Article.objects.filter(issue_id=lastissueid)
+            return queryset
+        else:
+            return None
     #Override
     def get_object(self):
         return get_object_or_404(self.get_queryset())
